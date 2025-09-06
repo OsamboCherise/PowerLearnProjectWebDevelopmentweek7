@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Animations & Functions</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* CSS Variables for consistent theming */
+        :root {
+            --primary: #3498db;
+            --secondary: #2ecc71;
+            --accent: #e74c3c;
+            --dark: #2c3e50;
+            --light: #ecf0f1;
+            --text: #333;
+            --shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: var(--dark);
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        h2 {
+            color: var(--primary);
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 0.5rem;
+            margin: 2rem 0 1.5rem;
+        }
+
+        h3 {
+            color: var(--secondary);
+            margin: 1.5rem 0 1rem;
+        }
+
+        .section {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .code-block {
+            background: var(--dark);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            overflow-x: auto;
+            font-family: monospace;
+            line-height: 1.5;
+        }
+
+        .interactive-demo {
+            background: var(--light);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: var(--transition);
+            margin: 0.5rem 0.5rem 0.5rem 0;
+            font-size: 1rem;
+        }
+
+        .btn:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: var(--secondary);
+        }
+
+        .btn-secondary:hover {
+            background: #27ae60;
+        }
+
+        .btn-accent {
+            background: var(--accent);
+        }
+
+        .btn-accent:hover {
+            background: #c0392b;
+        }
+
+        input, select {
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin: 0.5rem 0;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .output {
+            background: var(--light);
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            min-height: 50px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+        }
+
+        /* Animation Demo Elements */
+        .animation-box {
+            width: 100px;
+            height: 100px;
+            background: var(--primary);
+            margin: 1rem 0;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .animation-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 2rem;
+            padding: 2rem;
+            background: var(--dark);
+            color: white;
+            border-radius: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>JavaScript Animations & Functions</h1>
+            <p>Exploring scope, parameters, return values, and animation triggers</p>
+        </header>
+
+        <!-- Part 1: Function Scope, Parameters, and Return Values -->
+        <section class="section">
+            <h2>Part 1: Function Fundamentals</h2>
+            
+            <div class="code-block">
+                // Global scope variable<br>
+                const globalMessage = "I'm global!";<br>
+                <br>
+                function demonstrateScope(localParam) {<br>
+                &nbsp;&nbsp;// Local scope variable<br>
+                &nbsp;&nbsp;let localMessage = "I'm local!";<br>
+                &nbsp;&nbsp;<br>
+                &nbsp;&nbsp;if (true) {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;// Block scope variable (ES6)<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;let blockMessage = "I'm block scoped!";<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;console.log(blockMessage); // Accessible here<br>
+                &nbsp;&nbsp;}<br>
+                &nbsp;&nbsp;<br>
+                &nbsp;&nbsp;// console.log(blockMessage); // Error: blockMessage is not defined<br>
+                &nbsp;&nbsp;console.log(localMessage); // Accessible here<br>
+                &nbsp;&nbsp;console.log(globalMessage); // Accessible here<br>
+                &nbsp;&nbsp;<br>
+                &nbsp;&nbsp;return `Parameter: ${localParam}, Local: ${localMessage}, Global: ${globalMessage}`;<br>
+                }<br>
+                <br>
+                // Function with default parameters<br>
+                function calculateArea(width = 10, height = 5) {<br>
+                &nbsp;&nbsp;return width * height;<br>
+                }<br>
+                <br>
+                // Function that returns another function<br>
+                function createMultiplier(multiplier) {<br>
+                &nbsp;&nbsp;return function(number) {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;return number * multiplier;<br>
+                &nbsp;&nbsp;};<br>
+                }
+            </div>
+
+            <div class="interactive-demo">
+                <h3>Try Function Examples</h3>
+                <button class="btn" onclick="runScopeDemo()">Run Scope Demo</button>
+                <button class="btn btn-secondary" onclick="runAreaCalculation()">Calculate Area</button>
+                <button class="btn btn-accent" onclick="runMultiplierDemo()">Multiplier Demo</button>
+                <div class="output" id="functionOutput"></div>
+            </div>
+        </section>
+
+        <!-- Part 2: CSS Transitions -->
+        <section class="section">
+            <h2>Part 2: CSS Transitions</h2>
+            
+            <div class="code-block">
+                /* CSS Transition examples */<br>
+                .transition-box {<br>
+                &nbsp;&nbsp;width: 100px;<br>
+                &nbsp;&nbsp;height: 100px;<br>
+                &nbsp;&nbsp;background: #3498db;<br>
+                &nbsp;&nbsp;transition: all 0.5s ease;<br>
+                &nbsp;&nbsp;/* Shorthand for: */<br>
+                &nbsp;&nbsp;/* transition-property: all; */<br>
+                &nbsp;&nbsp;/* transition-duration: 0.5s; */<br>
+                &nbsp;&nbsp;/* transition-timing-function: ease; */<br>
+                }<br>
+                <br>
+                .transition-box:hover {<br>
+                &nbsp;&nbsp;transform: scale(1.2) rotate(10deg);<br>
+                &nbsp;&nbsp;background: #e74c3c;<br>
+                &nbsp;&nbsp;border-radius: 50%;<br>
+                }<br>
+                <br>
+                /* Multiple transitions with different timing */<br>
+                .complex-transition {<br>
+                &nbsp;&nbsp;transition: <br>
+                &nbsp;&nbsp;&nbsp;&nbsp;background 0.3s ease,<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;transform 0.5s ease-in-out,<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;border-radius 0.7s ease-out;<br>
+                }
+            </div>
+
+            <div class="interactive-demo">
+                <h3>Transition Examples</h3>
+                <p>Hover over the boxes to see transitions in action:</p>
+                
+                <div class="animation-controls">
+                    <div>
+                        <p>Simple Transition</p>
+                        <div class="animation-box" style="transition: all 0.5s ease;">
+                            Hover Me
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <p>Complex Transition</p>
+                        <div class="animation-box" style="transition: background 0.3s ease, transform 0.5s ease-in-out, border-radius 0.7s ease-out;">
+                            Hover Me
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="btn" onclick="toggleTransitionClass()">Toggle Transition Class</button>
+                <div class="output" id="transitionOutput"></div>
+            </div>
+        </section>
+
+        <!-- Part 3: CSS Keyframe Animations -->
+        <section class="section">
+            <h2>Part 3: CSS Keyframe Animations</h2>
+            
+            <div class="code-block">
+                /* Keyframe animation examples */<br>
+                @keyframes slideIn {<br>
+                &nbsp;&nbsp;from {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;transform: translateX(-100%);<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;opacity: 0;<br>
+                &nbsp;&nbsp;}<br>
+                &nbsp;&nbsp;to {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;transform: translateX(0);<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;opacity: 1;<br>
+                &nbsp;&nbsp;}<br>
+                }<br>
+                <br>
+                @keyframes bounce {<br>
+                &nbsp;&nbsp;0%, 20%, 50%, 80%, 100% {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;transform: translateY(0);<br>
+                &nbsp;&nbsp;}<br>
+                &nbsp;&nbsp;40% {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;transform: translateY(-30px);<br>
+                &nbsp;&nbsp;}<br>
+                &nbsp;&nbsp;60% {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;transform: translateY(-15px);<br>
+                &nbsp;&nbsp;}<br>
+                }<br>
+                <br>
+                @keyframes pulse {<br>
+                &nbsp;&nbsp;0% {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;transform: scale(1);<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;box-shadow: 0 0 0 0 rgba(52, 152, 219, 0.7);<br>
+                &nbsp;&nbsp;}<br>
+                &nbsp;&nbsp;70% {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;transform: scale(1.05);<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;box-shadow: 0 0 0 10px rgba(52, 152, 219, 0);<br>
+                &nbsp;&nbsp;}<br>
+                &nbsp;&nbsp;100% {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;transform: scale(1);<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;box-shadow: 0 0 0 0 rgba(52, 152, 219, 0);<br>
+                &nbsp;&nbsp;}<br>
+                }<br>
+                <br>
+                .animate-slideIn {<br>
+                &nbsp;&nbsp;animation: slideIn 1s ease forwards;<br>
+                }<br>
+                <br>
+                .animate-bounce {<br>
+                &nbsp;&nbsp;animation: bounce 2s infinite;<br>
+                }<br>
+                <br>
+                .animate-pulse {<br>
+                &nbsp;&nbsp;animation: pulse 2s infinite;<br>
+                }
+            </div>
+
+            <div class="interactive-demo">
+                <h3>Keyframe Animation Examples</h3>
+                
+                <div class="animation-controls">
+                    <button class="btn" onclick="triggerAnimation('slideIn')">Slide In</button>
+                    <button class="btn btn-secondary" onclick="triggerAnimation('bounce')">Bounce</button>
+                    <button class="btn btn-accent" onclick="triggerAnimation('pulse')">Pulse</button>
+                    <button class="btn" onclick="stopAnimations()">Stop All</button>
+                </div>
+                
+                <div class="animation-box" id="animatedBox">
+                    Animate Me!
+                </div>
+                
+                <div class="output" id="animationOutput"></div>
+            </div>
+        </section>
+
+        <!-- Part 4: JavaScript Animation Triggers -->
+        <section class="section">
+            <h2>Part 4: JavaScript Animation Triggers</h2>
+            
+            <div class="code-block">
+                // Function to trigger CSS animations<br>
+                function triggerAnimation(animationName) {<br>
+                &nbsp;&nbsp;const element = document.getElementById('animatedBox');<br>
+                &nbsp;&nbsp;<br>
+                &nbsp;&nbsp;// Remove any existing animation classes<br>
+                &nbsp;&nbsp;element.classList.remove('animate-slideIn', 'animate-bounce', 'animate-pulse');<br>
+                &nbsp;&nbsp;<br>
+                &nbsp;&nbsp;// Force reflow to restart animation<br>
+                &nbsp;&nbsp;void element.offsetWidth;<br>
+                &nbsp;&nbsp;<br>
+                &nbsp;&nbsp;// Add the requested animation class<br>
+                &nbsp;&nbsp;element.classList.add(`animate-${animationName}`);<br>
+                &nbsp;&nbsp;<br>
+                &nbsp;&nbsp;return `Started ${animationName} animation`;<br>
+                }<br>
+                <br>
+                // Function to stop all animations<br>
+                function stopAnimations() {<br>
+                &nbsp;&nbsp;const element = document.getElementById('animatedBox');<br>
+                &nbsp;&nbsp;element.classList.remove('animate-slideIn', 'animate-bounce', 'animate-pulse');<br>
+                &nbsp;&nbsp;return "Stopped all animations";<br>
+                }<br>
+                <br>
+                // Function to toggle transition class<br>
+                function toggleTransitionClass() {<br>
+                &nbsp;&nbsp;const boxes = document.querySelectorAll('.animation-box');<br>
+                &nbsp;&nbsp;boxes.forEach(box => {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;box.classList.toggle('no-transition');<br>
+                &nbsp;&nbsp;});<br>
+                &nbsp;&nbsp;<br>
+                &nbsp;&nbsp;return boxes[0].classList.contains('no-transition') <br>
+                &nbsp;&nbsp;&nbsp;&nbsp;? "Transitions disabled" <br>
+                &nbsp;&nbsp;&nbsp;&nbsp;: "Transitions enabled";<br>
+                }
+            </div>
+
+            <div class="interactive-demo">
+                <h3>Animation Control with JavaScript</h3>
+                <p>Use the buttons above to control animations programmatically.</p>
+                
+                <div class="animation-controls">
+                    <button class="btn" onclick="animateWithJS()">Animate with JS</button>
+                    <button class="btn btn-secondary" onclick="animateWithDelay()">Animate with Delay</button>
+                    <button class="btn btn-accent" onclick="chainAnimations()">Chain Animations</button>
+                </div>
+                
+                <div class="animation-box" id="jsAnimatedBox">
+                    JS Controls
+                </div>
+                
+                <div class="output" id="jsAnimationOutput"></div>
+            </div>
+        </section>
+
+        <footer>
+            <p>Week 7 Assignment - JavaScript Animations & Functions</p>
+            <p>Scope, parameters, return values, and animation triggers</p>
+        </footer>
+    </div>
+
+    <script>
+        // ===== PART 1: FUNCTION SCOPE, PARAMETERS, AND RETURN VALUES =====
+        
+        // Global scope variable
+        const globalMessage = "I'm global!";
+        
+        // Function demonstrating different scopes
+        function demonstrateScope(localParam) {
+            // Local scope variable
+            let localMessage = "I'm local!";
+            
+            if (true) {
+                // Block scope variable (ES6)
+                let blockMessage = "I'm block scoped!";
+                console.log(blockMessage); // Accessible here
+            }
+            
+            // console.log(blockMessage); // Error: blockMessage is not defined
+            console.log(localMessage); // Accessible here
+            console.log(globalMessage); // Accessible here
+            
+            return `Parameter: ${localParam}, Local: ${localMessage}, Global: ${globalMessage}`;
+        }
+        
+        // Function with default parameters
+        function calculateArea(width = 10, height = 5) {
+            return width * height;
+        }
+        
+        // Function that returns another function (closure)
+        function createMultiplier(multiplier) {
+            return function(number) {
+                return number * multiplier;
+            };
+        }
+        
+        // Demo functions for the UI
+        function runScopeDemo() {
+            const result = demonstrateScope("Hello from parameter!");
+            document.getElementById('functionOutput').textContent = result;
+        }
+        
+        function runAreaCalculation() {
+            const area = calculateArea(15, 8);
+            document.getElementById('functionOutput').textContent = `Area: ${area}`;
+        }
+        
+        function runMultiplierDemo() {
+            const double = createMultiplier(2);
+            const triple = createMultiplier(3);
+            
+            document.getElementById('functionOutput').textContent = 
+                `Double of 5: ${double(5)}, Triple of 5: ${triple(5)}`;
+        }
+        
+        // ===== PART 4: JAVASCRIPT ANIMATION TRIGGERS =====
+        
+        // Function to trigger CSS animations
+        function triggerAnimation(animationName) {
+            const element = document.getElementById('animatedBox');
+            
+            // Remove any existing animation classes
+            element.classList.remove('animate-slideIn', 'animate-bounce', 'animate-pulse');
+            
+            // Force reflow to restart animation
+            void element.offsetWidth;
+            
+            // Add the requested animation class
+            element.classList.add(`animate-${animationName}`);
+            
+            const output = `Started ${animationName} animation`;
+            document.getElementById('animationOutput').textContent = output;
+            return output;
+        }
+        
+        // Function to stop all animations
+        function stopAnimations() {
+            const element = document.getElementById('animatedBox');
+            element.classList.remove('animate-slideIn', 'animate-bounce', 'animate-pulse');
+            
+            const output = "Stopped all animations";
+            document.getElementById('animationOutput').textContent = output;
+            return output;
+        }
+        
+        // Function to toggle transition class
+        function toggleTransitionClass() {
+            const boxes = document.querySelectorAll('.animation-box');
+            boxes.forEach(box => {
+                box.classList.toggle('no-transition');
+            });
+            
+            const output = boxes[0].classList.contains('no-transition') 
+                ? "Transitions disabled" 
+                : "Transitions enabled";
+                
+            document.getElementById('transitionOutput').textContent = output;
+            return output;
+        }
+        
+        // Additional animation functions for JS-controlled animations
+        function animateWithJS() {
+            const element = document.getElementById('jsAnimatedBox');
+            element.style.transition = 'all 0.5s ease';
+            element.style.transform = 'translateX(200px) rotate(180deg)';
+            element.style.backgroundColor = '#e74c3c';
+            
+            document.getElementById('jsAnimationOutput').textContent = 
+                'Animation started with JavaScript';
+        }
+        
+        function animateWithDelay() {
+            const element = document.getElementById('jsAnimatedBox');
+            element.style.transition = 'all 0.5s ease 1s'; // 1s delay
+            element.style.transform = 'translateX(0) rotate(0deg)';
+            element.style.backgroundColor = '#3498db';
+            
+            document.getElementById('jsAnimationOutput').textContent = 
+                'Animation with 1s delay started';
+        }
+        
+        function chainAnimations() {
+            const element = document.getElementById('jsAnimatedBox');
+            
+            // First animation
+            element.style.transition = 'all 0.5s ease';
+            element.style.transform = 'translateX(200px)';
+            
+            // Second animation after a delay
+            setTimeout(() => {
+                element.style.transform = 'translateX(200px) translateY(100px)';
+                
+                // Third animation after another delay
+                setTimeout(() => {
+                    element.style.transform = 'translateX(0) translateY(0)';
+                    document.getElementById('jsAnimationOutput').textContent = 
+                        'Chained animations completed';
+                }, 500);
+            }, 500);
+            
+            document.getElementById('jsAnimationOutput').textContent = 
+                'Chained animations started';
+        }
+    </script>
+</body>
+</html>
